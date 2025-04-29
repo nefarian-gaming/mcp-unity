@@ -44,10 +44,16 @@ namespace McpUnity.Tools
 
             try
             {
-                // Find the specified scene template asset
-                var templates = SceneTemplateAsset.GetTemplateAssets();
-                SceneTemplateAsset foundTemplate = templates.FirstOrDefault(t => 
-                    t.name.Equals(templateName, StringComparison.OrdinalIgnoreCase) || 
+                // Find the specified scene template asset using AssetDatabase
+                string[] templateGuids = AssetDatabase.FindAssets("t:SceneTemplateAsset");
+                var templates = templateGuids
+                    .Select(AssetDatabase.GUIDToAssetPath)
+                    .Select(path => AssetDatabase.LoadAssetAtPath<SceneTemplateAsset>(path))
+                    .Where(asset => asset != null) // Ensure loaded asset is not null
+                    .ToList(); // Convert to List for easier processing
+
+                SceneTemplateAsset foundTemplate = templates.FirstOrDefault(t =>
+                    t.name.Equals(templateName, StringComparison.OrdinalIgnoreCase) ||
                     GetTemplateDisplayName(t).Equals(templateName, StringComparison.OrdinalIgnoreCase));
 
                 if (foundTemplate == null)
