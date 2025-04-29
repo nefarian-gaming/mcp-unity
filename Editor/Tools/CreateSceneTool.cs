@@ -17,8 +17,8 @@ namespace McpUnity.Tools
     {
         public CreateSceneTool()
         {
-            Name = "create_scene_from_template";
-            Description = "Creates a new scene using a specified Scene Template asset.";
+            Name = "create_lit2d_scene";
+            Description = "Creates a new 2D Lit URP scene using the Lit2DSceneTemplate asset.";
         }
 
         /// <summary>
@@ -27,17 +27,10 @@ namespace McpUnity.Tools
         /// <param name="parameters">Tool parameters as a JObject.</param>
         public override JObject Execute(JObject parameters)
         {
-            // Extract parameters
-            string templateName = parameters["templateName"]?.ToObject<string>();
             string scenePath = parameters["scenePath"]?.ToObject<string>(); // Optional: path to save the new scene
 
-            if (string.IsNullOrEmpty(templateName))
-            {
-                return McpUnitySocketHandler.CreateErrorResponse(
-                    "Required parameter 'templateName' not provided (e.g., 'Basic 2D (Built-in)')",
-                    "validation_error"
-                );
-            }
+            // Always use the URP 2D Lit scene template
+            const string templateName = "Lit2DSceneTemplate";
 
             // Log the execution attempt
             McpLogger.LogInfo($"[MCP Unity] Attempting to create scene from template: '{templateName}'{(string.IsNullOrEmpty(scenePath) ? "" : $" at path: '{scenePath}'")}");
@@ -58,10 +51,10 @@ namespace McpUnity.Tools
 
                 if (foundTemplate == null)
                 {
-                    string availableTemplates = string.Join(", ", templates.Select(t => $"'{GetTemplateDisplayName(t)}' ('{t.name}')"));
-                    McpLogger.LogError($"[MCP Unity] Scene template '{templateName}' not found. Available templates: {availableTemplates}");
+                    string available = string.Join(", ", templates.Select(t => $"'{GetTemplateDisplayName(t)}'"));
+                    McpLogger.LogError($"[MCP Unity] Lit2D template not found. Available templates: {available}");
                     return McpUnitySocketHandler.CreateErrorResponse(
-                        $"Scene template '{templateName}' not found. Available templates: {availableTemplates}",
+                        $"Lit2D scene template '{templateName}' not found. Available: {available}",
                         "not_found_error"
                     );
                 }
@@ -156,4 +149,4 @@ namespace McpUnity.Tools
             return templateAsset.name;
         }
     }
-} 
+}
