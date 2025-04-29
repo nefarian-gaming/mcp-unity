@@ -89,7 +89,7 @@ namespace McpUnity.Tools
             }
             catch (Exception ex)
             {
-                McpLogger.LogError($"[MCP Unity] Error creating scene from template '{templateName}': {ex.Message}
+                McpLogger.LogError($@"[MCP Unity] Error creating scene from template '{templateName}': {ex.Message}
 {ex.StackTrace}");
                 return McpUnitySocketHandler.CreateErrorResponse(
                     $"Error creating scene from template '{templateName}': {ex.Message}",
