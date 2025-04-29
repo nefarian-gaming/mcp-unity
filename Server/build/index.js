@@ -10,6 +10,7 @@ import { createRunTestsTool } from './tools/runTestsTool.js';
 import { createSendConsoleLogTool } from './tools/sendConsoleLogTool.js';
 import { createUpdateComponentTool } from './tools/updateComponentTool.js';
 import { createAddAssetToSceneTool } from './tools/addAssetToSceneTool.js';
+import { createCreateSceneTool } from './tools/createSceneTool.js';
 import { createGetMenuItemsResource } from './resources/getMenuItemResource.js';
 import { createGetConsoleLogsResource } from './resources/getConsoleLogResource.js';
 import { createGetHierarchyResource } from './resources/getHierarchyResource.js';
@@ -42,6 +43,7 @@ createRunTestsTool(server, mcpUnity, toolLogger);
 createSendConsoleLogTool(server, mcpUnity, toolLogger);
 createUpdateComponentTool(server, mcpUnity, toolLogger);
 createAddAssetToSceneTool(server, mcpUnity, toolLogger);
+createCreateSceneTool(server, mcpUnity, toolLogger);
 // Create and register all resources with the MCP server
 createGetTestsResource(server, mcpUnity, resourceLogger);
 createGetGameObjectResource(server, mcpUnity, resourceLogger);
