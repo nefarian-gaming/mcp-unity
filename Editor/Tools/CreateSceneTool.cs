@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 namespace McpUnity.Tools
 {
     /// <summary>
-    /// Tool for creating a new Unity scene from a specified Scene Template.
+    /// Tool for creating a new Unity scene.
     /// </summary>
     public class CreateSceneTool : McpToolBase
     {
