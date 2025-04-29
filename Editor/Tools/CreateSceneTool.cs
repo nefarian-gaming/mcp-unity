@@ -68,6 +68,23 @@ namespace McpUnity.Tools
 
                 McpLogger.LogInfo($"[MCP Unity] Found template asset: {foundTemplate.name}");
 
+                // Default the scene path if not provided
+                if (string.IsNullOrEmpty(scenePath))
+                {
+                    string defaultDir = "Assets/Scenes";
+                    // Sanitize template name to be used in a file path
+                    string sanitizedTemplateName = string.Join("_", templateName.Split(Path.GetInvalidFileNameChars()));
+                    scenePath = Path.Combine(defaultDir, $"{sanitizedTemplateName}_Scene.unity");
+
+                    // Ensure the default directory exists
+                    if (!Directory.Exists(defaultDir))
+                    {
+                        Directory.CreateDirectory(defaultDir);
+                        McpLogger.LogInfo($"[MCP Unity] Created default directory: {defaultDir}");
+                    }
+                    McpLogger.LogInfo($"[MCP Unity] No scenePath provided, defaulting to: '{scenePath}'");
+                }
+
                 // Instantiate the scene from the template
                 // Instantiate returns the SceneTemplateResult which might be useful later, but for now we just check for success.
                 // The 'false' argument for 'loadAdditively' means it creates a new scene, replacing the current one (prompts for save).
